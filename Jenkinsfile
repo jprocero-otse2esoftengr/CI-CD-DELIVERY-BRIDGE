@@ -21,7 +21,7 @@ pipeline {
         string(name: 'BRIDGE_USER', defaultValue: 'jprocero', description: 'Bridge username')
         password(name: 'BRIDGE_PASSWORD', defaultValue: 'jprocero', description: 'Bridge password')
         string(name: 'BRIDGE_PORT', defaultValue: '11186', description: 'Bridge port')
-        string(name: 'CONTROL_PORT', defaultValue: '21190', description: 'Control port')
+        string(name: 'CONTROL_PORT', defaultValue: '21176', description: 'Control port')
     }
 
     stages {
@@ -68,6 +68,9 @@ pipeline {
                         
                         echo Configuring service port to match bridge port...
                         npx e2e-bridge-cli settings regtestlatest set addOn_SEI_HTTP_Service_BuilderUMLService_Port 8080 -h ${params.BRIDGE_HOST} -u ${params.BRIDGE_USER} -P ${params.BRIDGE_PASSWORD}
+                        
+                        echo Configuring control port to 21176...
+                        npx e2e-bridge-cli settings regtestlatest set global_e2e_configuration_controller_Port 21176 -h ${params.BRIDGE_HOST} -u ${params.BRIDGE_USER} -P ${params.BRIDGE_PASSWORD}
                         
                         echo Restarting service to apply configuration...
                         npx e2e-bridge-cli stop regtestlatest -h ${params.BRIDGE_HOST} -u ${params.BRIDGE_USER} -P ${params.BRIDGE_PASSWORD}

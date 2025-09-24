@@ -5,15 +5,15 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '1'))
         disableConcurrentBuilds()
     }
-    
+
     environment {
         REGTEST_JAR = 'jarfiles/RegTestRunner-8.10.5.jar'
     }
-    
+
     triggers {
         pollSCM('H/5 * * * *')  // Poll GitHub every 5 minutes
     }
-    
+
     parameters {
         choice(name: 'XUMLC', choices: ['jarfiles/xumlc-7.20.0.jar'], description: 'Location of the xUML Compiler')
         choice(name: 'REGTEST', choices: ['jarfiles/RegTestRunner-8.10.5.jar'], description: 'Location of the Regression Test Runner')
@@ -24,9 +24,20 @@ pipeline {
         string(name: 'CONTROL_PORT', defaultValue: '21176', description: 'Control port')
     }
 
-
-     
     stages {
+        stage('Checkout') {
+            steps {
+                checkout scmGit(
+                    branches: [[name: '*/master']],
+                    extensions: [],
+                    userRemoteConfigs: [[
+                        credentialsId: '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',
+                        url: 'https://github.com/jprocero-otse2esoftengr/CI-CD-DELIVERY-BRIDGE.git'
+                    ]]
+                )
+            }
+        }
+
         stage('Build') {
             steps {
                 dir('.') {
@@ -40,7 +51,8 @@ pipeline {
                 }
             }
         }
-         stage('Deploy') {
+
+        stage('Deploy') {
             steps {
                 dir('.') {
                     bat """
@@ -53,11 +65,11 @@ pipeline {
                          
                         echo All repository files found, starting deployment...
                         npx e2e-bridge-cli deploy repository/BuilderUML/regtestlatest.rep -h ${params.BRIDGE_HOST} -u ${params.BRIDGE_USER} -P ${params.BRIDGE_PASSWORD} -o overwrite
-                        
                     """
                 }
             }
         }
+
         stage('List Test Suites') {
             steps {
                 dir('regressiontest') {
@@ -79,6 +91,7 @@ pipeline {
                 }
             }
         }
+
         stage('Test') {
             steps {
                 dir('.') {
@@ -141,7 +154,6 @@ pipeline {
                             def resultContent = readFile('regressiontest/result.xml')
                             echo "Processing test results..."
                             
-                            // Check if we have actual test results
                             if (resultContent.contains('tests="0"') || resultContent.contains('testsuite name=""')) {
                                 echo "No test results found in result.xml - this may indicate test configuration issues"
                                 echo "Result content: ${resultContent}"
@@ -151,16 +163,11 @@ pipeline {
                                 echo "Result content: ${resultContent}"
                             }
                             
-                            // Always publish results for Jenkins reporting
                             junit 'regressiontest/result.xml'
                             archiveArtifacts artifacts: 'regressiontest/result.xml'
-                            
-                            // Also archive test case files for debugging
                             archiveArtifacts artifacts: 'regressiontest/.$output/**/*'
-                            
                         } else {
                             echo "No test results file found - this indicates a test execution problem"
-                            // Create a failure result for Jenkins
                             writeFile file: 'regressiontest/result.xml', text: '''<?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
    <testsuite name="BuilderUML Regression Tests" tests="1" failures="1" errors="0" skipped="0">

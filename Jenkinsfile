@@ -117,7 +117,6 @@ pipeline {
                         echo - Project: .
                         echo - Host: ${params.BRIDGE_HOST}
                         echo - Port: ${params.BRIDGE_PORT}
-                        echo - Control Port: ${params.CONTROL_PORT}
                         echo - Username: ${params.BRIDGE_USER}
                         echo - Note: RegTestRunner will run all available test suites in the project
                         

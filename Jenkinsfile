@@ -64,7 +64,10 @@ pipeline {
                         )
                          
                         echo All repository files found, starting deployment...
-                        npx e2e-bridge-cli deploy repository/BuilderUML/regtestlatest.rep -h ${params.BRIDGE_HOST} -u ${params.BRIDGE_USER} -P ${params.BRIDGE_PASSWORD} -o overwrite
+                        npx e2e-bridge-cli deploy repository/BuilderUML/regtestlatest.rep -h ${params.BRIDGE_HOST} -u ${params.BRIDGE_USER} -P ${params.BRIDGE_PASSWORD} -p 8080 -o overwrite
+                        
+                        echo Configuring service port to match bridge port...
+                        npx e2e-bridge-cli settings regtestlatest set addOn_SEI_HTTP_Service_BuilderUMLService_Port 8080 -h ${params.BRIDGE_HOST} -u ${params.BRIDGE_USER} -P ${params.BRIDGE_PASSWORD}
                     """
                 }
             }

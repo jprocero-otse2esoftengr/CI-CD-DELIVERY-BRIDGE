@@ -532,7 +532,7 @@
 	<MagicDraw_Profile:DiagramInfo xmi:id='_18_0_6_f4d0365_1753807809624_636365_13805' base_Diagram='_18_0_6_f4d0365_1753807809639_47671_13831' Creation_date='2/18/19 9:30 AM' Modification_date='7/30/25 12:50 AM' Author='cschmitt' Last_modified_by='jprocero'/>
 	<MagicDraw_Profile:DiagramInfo xmi:id='_18_0_6_f4d0365_1753839490694_681087_13930' base_Diagram='_18_0_6_f4d0365_1753839490678_887996_13919' Creation_date='7/30/25 9:38 AM' Modification_date='9/17/25 6:33 PM' Author='jprocero' Last_modified_by='jprocero'/>
 	<Basic_Architecture:E2EComposite xmi:id='_18_0_6_f4d0365_1753839490742_323740_13953' base_Component='_18_0_6_f4d0365_1753839490742_356278_13950' wsdlPerService='true' killJVMThreadsOnShutdown='true' classToXMLDefaultRootName='Default' version='0.0.1' category='Training2025' controlPort='21176'/>
-	<SOAP:E2ESOAPService xmi:id='_18_0_6_f4d0365_1753839490758_313994_13967' base_Component='_18_0_6_f4d0365_1753839490742_809534_13966' port='8080' authenticationMode='None'/>
+	<SOAP:E2ESOAPService xmi:id='_18_0_6_f4d0365_1753839490758_313994_13967' base_Component='_18_0_6_f4d0365_1753839490742_809534_13966' port='11165' authenticationMode='None'/>
 	<Basic_Structure:Repository xmi:id='_18_0_6_f4d0365_1753839490742_683200_13952' base_Package='_18_0_6_f4d0365_1753839490742_161846_13951'/>
 	<Basic_Structure:Repository xmi:id='_18_0_6_f4d0365_1753807809635_314827_13812' base_Package='_18_0_6_f4d0365_1753807809634_97803_13808'/>
 	<Basic_Structure:Repository xmi:id='_18_0_6_f4d0365_1753807809637_973203_13821' base_Package='_18_0_6_f4d0365_1753807809642_935250_13845'/>

@@ -20,8 +20,8 @@ pipeline {
         string(name: 'BRIDGE_HOST', defaultValue: 'ec2-52-74-183-0.ap-southeast-1.compute.amazonaws.com', description: 'Bridge host address')
         string(name: 'BRIDGE_USER', defaultValue: 'jprocero', description: 'Bridge username')
         password(name: 'BRIDGE_PASSWORD', defaultValue: 'jprocero', description: 'Bridge password')
-        string(name: 'BRIDGE_PORT', defaultValue: '8080', description: 'Bridge port')
-        string(name: 'CONTROL_PORT', defaultValue: '21176', description: 'Control port')
+        string(name: 'BRIDGE_PORT', defaultValue: '11186', description: 'Bridge port')
+        string(name: 'CONTROL_PORT', defaultValue: '21190', description: 'Control port')
     }
 
     stages {
@@ -64,7 +64,7 @@ pipeline {
                         )
                          
                         echo All repository files found, starting deployment...
-                        npx e2e-bridge-cli deploy repository/BuilderUML/regtestlatest.rep -h ${params.BRIDGE_HOST} -u ${params.BRIDGE_USER} -P ${params.BRIDGE_PASSWORD} -p ${params.BRIDGE_PORT} -o overwrite
+                        npx e2e-bridge-cli deploy repository/BuilderUML/regtestlatest.rep -h ${params.BRIDGE_HOST} -u ${params.BRIDGE_USER} -P ${params.BRIDGE_PASSWORD} -o overwrite
                     """
                 }
             }

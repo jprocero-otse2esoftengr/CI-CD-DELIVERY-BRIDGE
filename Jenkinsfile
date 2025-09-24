@@ -68,6 +68,10 @@ pipeline {
                         
                         echo Configuring service port to match bridge port...
                         npx e2e-bridge-cli settings regtestlatest set addOn_SEI_HTTP_Service_BuilderUMLService_Port 8080 -h ${params.BRIDGE_HOST} -u ${params.BRIDGE_USER} -P ${params.BRIDGE_PASSWORD}
+                        
+                        echo Restarting service to apply configuration...
+                        npx e2e-bridge-cli stop regtestlatest -h ${params.BRIDGE_HOST} -u ${params.BRIDGE_USER} -P ${params.BRIDGE_PASSWORD}
+                        npx e2e-bridge-cli start regtestlatest -h ${params.BRIDGE_HOST} -u ${params.BRIDGE_USER} -P ${params.BRIDGE_PASSWORD}
                     """
                 }
             }
